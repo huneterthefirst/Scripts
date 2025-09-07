@@ -89,6 +89,7 @@ local function Grab(Name)
 			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
 			v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
 
+			task.wait(0.0005)
 			-- TELEPORT BACK
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
 			-- YANK THE ITEM WITH US
