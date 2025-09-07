@@ -81,25 +81,19 @@ local function Grab(Name)
 
     for _, v in ipairs(workspace.Items:GetChildren()) do
         if v.Name == Name and v.Name ~= "Item Chest" then
-            task.spawn(function()
-				for i = 1, 15, 1 do
-					-- TELEPORT TO ITEM
-					game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
+            -- TELEPORT TO ITEM
+			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
 
-					-- FORCE TOUCH IT (THE SECRET SAUCE)
-					firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
+			-- FORCE TOUCH IT (THE SECRET SAUCE)
+			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
 
-					-- TELEPORT BACK
-					game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
-					-- YANK THE ITEM WITH US
-					v:SetPrimaryPartCFrame(CachedPos)
-					task.wait(0.005)
-				end
-			end)
+			-- TELEPORT BACK
+			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
+			-- YANK THE ITEM WITH US
+			v:SetPrimaryPartCFrame(CachedPos)
+			task.wait(0.005)
         end
     end
-    task.wait(5) -- let that shit replicate
-    game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
 end
 
 -- Rayfield GUI Setup
