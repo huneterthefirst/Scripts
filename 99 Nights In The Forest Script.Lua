@@ -1,5 +1,3 @@
--- Variables
-
 -- Functions
 local function GetAxe()
     local Inventory = game.Players.LocalPlayer:WaitForChild("Inventory")
