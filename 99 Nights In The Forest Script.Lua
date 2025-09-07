@@ -194,9 +194,23 @@ MainTab:CreateButton({
 })
 
 MainTab:CreateButton({
+	Name = "Grab Cooked Morsels",
+	Callback = function()
+		Grab("Cooked Morsel")
+	end
+})
+
+MainTab:CreateButton({
 	Name = "Grab Steaks",
 	Callback = function()
 		Grab("Steak")
+	end
+})
+
+MainTab:CreateButton({
+	Name = "Grab Cooked Steaks",
+	Callback = function()
+		Grab("Cooked Steak")
 	end
 })
 
