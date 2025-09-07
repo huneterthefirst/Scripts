@@ -86,6 +86,7 @@ local function Grab(Name)
 
 			-- FORCE TOUCH IT (THE SECRET SAUCE)
 			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
+			task.wait(0.005)
 
 			-- TELEPORT BACK
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
