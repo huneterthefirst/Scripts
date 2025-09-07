@@ -87,14 +87,11 @@ local function Grab(Name)
 
 			-- FORCE TOUCH IT (THE SECRET SAUCE)
 			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
+			task.wait(0.5)
 			v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
-
-			task.wait(0.0005)
-			-- TELEPORT BACK
-			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
-			-- YANK THE ITEM WITH US
         end
     end
+	game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
 end
 
 -- Rayfield GUI Setup
