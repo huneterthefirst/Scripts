@@ -313,11 +313,18 @@ PlayerTab:CreateButton({
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CSP)
 		else
 			Rayfield:Notify({
-			Title = "Code Menu",
-			Content = "Save A Position For",
-			Duration = 6.5,
-			Image = "rewind",
+				Title = "Code Menu",
+				Content = "Save A Position First",
+				Duration = 6.5,
+				Image = "rewind",
 			})
 		end
 	end
+})
+
+Rayfield:Notify({
+	Title = "Code Menu",
+	Content = "Make Sure You Wait At Least 5 Minutes Before Teleporting Items To Yourself Or It Won't Replicate",
+	Duration = 6.5,
+	Image = "rewind",
 })
