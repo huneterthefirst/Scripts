@@ -81,13 +81,13 @@ local function Grab(Name)
 
     for _, v in ipairs(workspace.Items:GetChildren()) do
         if v.Name == Name and v.Name ~= "Item Chest" then
-			Number += 3
+			Number += 0.05
             -- TELEPORT TO ITEM
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
 
 			-- FORCE TOUCH IT (THE SECRET SAUCE)
 			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
-			v:SetPrimaryPartCFrame(CachedPos + CFrame.new(Vector3.new(0, Number, 0)))
+			v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
 
 			-- TELEPORT BACK
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
