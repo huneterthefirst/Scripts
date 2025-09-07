@@ -293,6 +293,17 @@ MainTab:CreateButton({
 local CSP
 local PlayerTab = Window:CreateTab("Player", 4483362458)
 
+PlayerTab:CreateSlider({
+   Name = "WalkSpeed",
+   Range = {0, 100},
+   Increment = 1,
+   CurrentValue = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+   end,
+})
+
 PlayerTab:CreateButton({
 	Name = "Save Position",
 	Callback = function()
@@ -319,6 +330,6 @@ PlayerTab:CreateButton({
 Rayfield:Notify({
 	Title = "Code Menu",
 	Content = "Make Sure You Wait At Least 5 Minutes Before Teleporting Items To Yourself Or It Won't Replicate",
-	Duration = 6.5,
+	Duration = 6.7, -- HAH 67
 	Image = "rewind",
 })
