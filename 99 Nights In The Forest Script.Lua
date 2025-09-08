@@ -84,14 +84,24 @@ local function Grab(Name)
 			Number += 0.05
             -- TELEPORT TO ITEM
 			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
-
-			-- FORCE TOUCH IT (THE SECRET SAUCE)
-			firetouchinterest(game.Players.LocalPlayer.Character.PrimaryPart, v.PrimaryPart, 0) -- Touch
-			task.wait(0.5)
+			
+			task.wait(0.05)
+			local args = {
+				game:GetService("Players").LocalPlayer:WaitForChild("Inventory"):WaitForChild("Old Sack"),
+				v
+			}
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestBagStoreItem"):InvokeServer(unpack(args))
 			v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
+			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
+			task.wait(0.05)
+			local args = {
+				game:GetService("Players").LocalPlayer:WaitForChild("Inventory"):WaitForChild("Old Sack"),
+				Instance.new("Model", nil),
+				false
+			}
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestBagDropItem"):FireServer(unpack(args))
         end
     end
-	game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
 end
 
 -- Rayfield GUI Setup
