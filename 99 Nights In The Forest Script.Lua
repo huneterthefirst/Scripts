@@ -75,32 +75,59 @@ local function Kill(name)
 end
 
 local function Grab(Name)
-    print("Grabbing ".. Name)
-	local Number = 0
-    local CachedPos = game.Players.LocalPlayer.Character.PrimaryPart.CFrame
+    print("Grabbing: " .. Name)
 
+    local Number = 0
+    local Player = game.Players.LocalPlayer
+    local Character = Player.Character
+    local CachedPos = Character.PrimaryPart.CFrame
+    local BagRef = Bag and Bag() or Player:WaitForChild("Inventory"):WaitForChild("Old Sack")
+
+    -- Count matching items
+    local itemCount = 0
     for _, v in ipairs(workspace.Items:GetChildren()) do
         if v.Name == Name and v.Name ~= "Item Chest" then
-			Number += 0.05
-            -- TELEPORT TO ITEM
-			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
-			
-			task.wait(0.05)
-			local args = {
-				game:GetService("Players").LocalPlayer:WaitForChild("Inventory"):WaitForChild("Old Sack"),
-				v
-			}
-			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestBagStoreItem"):InvokeServer(unpack(args))
-			v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
-			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CachedPos)
-			task.wait(0.05)
-			local args = {
-				game:GetService("Players").LocalPlayer:WaitForChild("Inventory"):WaitForChild("Old Sack"),
-				Instance.new("Model", nil),
-				false
-			}
-			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("RequestBagDropItem"):FireServer(unpack(args))
+            itemCount += 1
         end
+    end
+
+    -- Estimate time: ~0.6s per item (teleport + store + drop)
+    local estimatedTime = itemCount * 0.6
+    print(string.format("Estimated time: %.2f seconds for %d items", estimatedTime, itemCount))
+
+    -- Grab loop
+    for _, v in ipairs(workspace.Items:GetChildren()) do
+        if v.Name == Name and v.Name ~= "Item Chest" then
+            Number += 0.05
+
+            -- Move to item
+            Character:SetPrimaryPartCFrame(v.PrimaryPart.CFrame)
+
+            -- Store item in bag
+            local storeArgs = { BagRef, v }
+            repeat
+                game.ReplicatedStorage.RemoteEvents.RequestBagStoreItem:InvokeServer(unpack(storeArgs))
+                task.wait()
+            until v.Parent == Player.ItemBag
+
+            -- Move item to cached position
+            v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
+            Character:SetPrimaryPartCFrame(CachedPos)
+            task.wait(0.5)
+
+            -- Drop item from bag
+            local dropArgs = { BagRef, v, true }
+            repeat
+                game.ReplicatedStorage.RemoteEvents.RequestBagStoreItem:InvokeServer(unpack(dropArgs))
+                task.wait()
+            until v.Parent ~= Player.ItemBag
+        end
+    end
+
+    -- Final cleanup: drop any leftover items in bag
+    for _, v in ipairs(Player.ItemBag:GetChildren()) do
+        local finalDropArgs = { BagRef, v, true }
+        game.ReplicatedStorage.RemoteEvents.RequestBagDropItem:FireServer(unpack(finalDropArgs))
     end
 end
 
@@ -309,6 +336,13 @@ MainTab:CreateButton({
 	Name = "Grab Tyres",
 	Callback = function()
 		Grab("Tyre")
+	end
+})
+
+MainTab:CreateButton({
+	Name = "Grab Oil Barrels",
+	Callback = function()
+		Grab("Oil Barrel")
 	end
 })
 
