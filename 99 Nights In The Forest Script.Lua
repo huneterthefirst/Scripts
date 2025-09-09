@@ -1,8 +1,25 @@
 -- Made by Mr. Coder username Foxy202003
+-- Variables
+local Inventory = _G.Inventory or 5
 -- Functions
 local function GetAxe()
     local Inventory = game.Players.LocalPlayer:WaitForChild("Inventory")
     local axeNames = {"Strong Axe", "Good Axe", "Old Axe"} -- Check in order from BEST to WORST
+   
+    for _, axeName in ipairs(axeNames) do
+        local axe = Inventory:FindFirstChild(axeName)
+        if axe then
+            return axe
+        end
+    end
+   
+    warn("No axe found in inventory! You need at least an Old Axe.")
+    return nil
+end
+
+local function GetSack()
+    local Inventory = game.Players.LocalPlayer:WaitForChild("Inventory")
+    local axeNames = {"Giant Sack", "Good Sack", "Old Sack"} -- Check in order from BEST to WORST
    
     for _, axeName in ipairs(axeNames) do
         local axe = Inventory:FindFirstChild(axeName)
@@ -82,7 +99,7 @@ local function Grab(Name)
     local Player = game.Players.LocalPlayer
     local Character = Player.Character
     local CachedPos = Character.PrimaryPart.CFrame
-    local BagRef = Bag and Bag() or Player:WaitForChild("Inventory"):WaitForChild("Old Sack")
+    local BagRef = GetSack()
 
     -- Count matching items
     local itemCount = 0
@@ -99,6 +116,18 @@ local function Grab(Name)
     -- Grab loop
     for _, v in ipairs(workspace.Items:GetChildren()) do
         if v.Name == Name and v.Name ~= "Item Chest" then
+			if #game.Players.LocalPlayer.ItemBag:GetChildren() >= Inventory then 
+				Character:SetPrimaryPartCFrame(CachedPos)
+				-- Drop item from bag
+				for i, v in game.Players.LocalPlayer.ItemBag:GetChildren() do
+					Character:SetPrimaryPartCFrame(CachedPos)
+					local dropArgs = { BagRef, v, true }
+					repeat
+						game.ReplicatedStorage.RemoteEvents.RequestBagStoreItem:InvokeServer(unpack(dropArgs))
+						task.wait()
+					until v.Parent ~= Player.ItemBag
+				end
+			end
             Number += 0.05
 
             -- Move to item
@@ -113,15 +142,6 @@ local function Grab(Name)
 
             -- Move item to cached position
             v:SetPrimaryPartCFrame(CachedPos + Vector3.new(0, Number, 0))
-            Character:SetPrimaryPartCFrame(CachedPos)
-            task.wait(0.5)
-
-            -- Drop item from bag
-            local dropArgs = { BagRef, v, true }
-            repeat
-                game.ReplicatedStorage.RemoteEvents.RequestBagStoreItem:InvokeServer(unpack(dropArgs))
-                task.wait()
-            until v.Parent ~= Player.ItemBag
         end
     end
 
@@ -145,7 +165,7 @@ local Window = Rayfield:CreateWindow({
     KeySystem = false
 })
 
-local MainTab = Window:CreateTab("Main", 4483362458) -- optional icon ID
+local MainTab = Window:CreateTab("Main", 4483362458)
 
 local AttackSection = MainTab:CreateSection("Attack (Hold Axe Out)")
 
@@ -202,6 +222,13 @@ MainTab:CreateButton({
     Name = "Kill Cultists",
     Callback = function()
 		Kill("Cultist")
+	end
+})
+
+MainTab:CreateButton({
+    Name = "Kill Bears",
+    Callback = function()
+		Kill("Bear")
 	end
 })
 
@@ -355,7 +382,7 @@ PlayerTab:CreateSlider({
    Range = {0, 100},
    Increment = 1,
    CurrentValue = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Fart",
    Callback = function(Value)
 		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
    end,
