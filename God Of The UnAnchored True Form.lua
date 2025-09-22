@@ -468,7 +468,7 @@ local function onInput(input, processed)
         updateStatus()
 
     elseif key == Enum.KeyCode.KeypadOne then
-        rotationSpeed = math.max(rotationSpeed - 0.5, 0.1)
+        rotationSpeed = math.max(rotationSpeed - 0.5, 0)
         updateStatus()
 
     -- ADJUST WOBBLE AMOUNT
