@@ -465,10 +465,12 @@ local function onInput(input, processed)
     -- ADJUST SPIN SPEED
     elseif key == Enum.KeyCode.KeypadMultiply then
         rotationSpeed = rotationSpeed + 0.5
+		formationDistance = rotationSpeed * 10
         updateStatus()
 
     elseif key == Enum.KeyCode.KeypadOne then
         rotationSpeed = math.max(rotationSpeed - 0.5, 0)
+		formationDistance = rotationSpeed * 10
         updateStatus()
 
     -- ADJUST WOBBLE AMOUNT
