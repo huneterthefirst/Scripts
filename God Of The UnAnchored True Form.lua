@@ -292,6 +292,7 @@ local function autoAddAllParts()
                                 bodyGyro.P = 100000
                                 bodyGyro.D = 2000
                                 bodyGyro.CFrame = descendant.CFrame
+								descendant.CanCollide = false
                             end
                         end
                     end
