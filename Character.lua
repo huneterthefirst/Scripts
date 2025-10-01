@@ -19,12 +19,11 @@ function module:CreateCharacter()
 	local HumanoidRootPart = Instance.new("Part")
 	HumanoidRootPart.Name = "HumanoidRootPart"
 	HumanoidRootPart.Size = Vector3.new(2, 2, 1)
-	HumanoidRootPart.CanCollide = false
-	HumanoidRootPart.Transparency = 0
+	HumanoidRootPart.CanCollide = true
+	HumanoidRootPart.Transparency = 1
 	HumanoidRootPart.TopSurface = Enum.SurfaceType.Smooth
 	HumanoidRootPart.BottomSurface = Enum.SurfaceType.Smooth
 	HumanoidRootPart.Material = Enum.Material.Plastic
-	HumanoidRootPart.Color = Color3.fromRGB(255, 255, 255)
 	HumanoidRootPart.Parent = Character
 
 	--============ Torso (Required for R6) ============--
@@ -36,7 +35,7 @@ function module:CreateCharacter()
 	Torso.TopSurface = Enum.SurfaceType.Smooth
 	Torso.BottomSurface = Enum.SurfaceType.Smooth
 	Torso.Material = Enum.Material.Plastic
-	Torso.Color = Color3.fromRGB(255, 255, 255)
+	Torso.Color = Color3.fromRGB(17, 17, 17)
 	Torso.Parent = Character
 
 	--============ RootJoint (Connects HumanoidRootPart to Torso) ============--
@@ -70,7 +69,7 @@ function module:CreateCharacter()
 		TopSurface = Enum.SurfaceType.Smooth,
 		BottomSurface = Enum.SurfaceType.Smooth,
 		Material = Enum.Material.Plastic,
-		Color = Color3.fromRGB(255, 255, 255)
+		Color = Color3.fromRGB(248, 248, 248)
 	}
 
 	Head.Size = Vector3.new(2, 1, 1) -- Head is different size
@@ -81,6 +80,13 @@ function module:CreateCharacter()
 	Head.Material = Enum.Material.Plastic
 	Head.Color = Color3.fromRGB(255, 255, 255)
 	Head.Parent = Character
+	local HeadMesh = Instance.new("SpecialMesh", Head)
+	HeadMesh.MeshType = Enum.MeshType.Head
+	HeadMesh.Scale = Vector3.new(1.25, 1.25, 1.25)
+	local Decal = Instance.new("Decal")
+	Decal.Texture = "http://www.roblox.com/asset/?id=83017053"
+	Decal.Face = Enum.NormalId.Front
+	Decal.Parent = Head
 
 	-- Apply properties to arms and legs
 	for _, limb in pairs({LArm, RArm, LLeg, RLeg}) do
