@@ -146,10 +146,6 @@ function module:CreateCharacter()
 				if correspondingPart then
 					part.Size = correspondingPart.Size
 					part.CFrame = correspondingPart.CFrame
-
-					-- Add highlight
-					local highlight = Instance.new("Highlight")
-					highlight.Parent = part
 				end
 			end
 		end
