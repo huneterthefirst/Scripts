@@ -25,6 +25,7 @@ function module:CreateCharacter()
 	HumanoidRootPart.BottomSurface = Enum.SurfaceType.Smooth
 	HumanoidRootPart.Material = Enum.Material.Plastic
 	HumanoidRootPart.Parent = Character
+	Character.PrimaryPart = HumanoidRootPart
 
 	--============ Torso (Required for R6) ============--
 	local Torso = Instance.new("Part")
