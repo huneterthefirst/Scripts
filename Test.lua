@@ -230,7 +230,7 @@ task.delay(5, function()
 			game.Players.LocalPlayer.Character = FakeCharacter
 			
 			-- Wait for character to fully load
-			task.wait()
+			task.wait(0.6)
 			AddBodyPositionToHats(game.Players.LocalPlayer)
 			task.wait(0.8)
 			sendToVoid(game.Players.LocalPlayer)
