@@ -100,7 +100,7 @@ task.delay(5, function()
 			if root then
 				-- Get current position to maintain X and Z coordinates
 				local currentPos = root.Position
-				--root.CFrame = CFrame.new(FakeCharacter.HumanoidRootPart.CFrame.LookVector * 5)
+				root.Position += Vector3.new(1, 2, 1)
 				task.wait(0.7)
 				character.Humanoid.Health = 0
 			end
@@ -221,16 +221,21 @@ task.delay(5, function()
 	AddBodyPositionToHats(game.Players.LocalPlayer)
 	task.wait(0.8)
 	sendToVoid(game.Players.LocalPlayer)
+	local db = false
 
 	Connection = game:GetService("RunService").RenderStepped:Connect(function(DeltaTime)
-		UpdateBodyPositions()
+		if not db then
+			UpdateBodyPositions()
+			task.wait(0.005)
+			db = false
+		end
 		
 		if game.Players.LocalPlayer.Character ~= FakeCharacter then
 			workspace.Camera.CameraSubject = FakeCharacter.Humanoid
 			game.Players.LocalPlayer.Character = FakeCharacter
 			
 			-- Wait for character to fully load
-			task.wait(1)
+			task.wait(0.1)
 			AddBodyPositionToHats(game.Players.LocalPlayer)
 			task.wait(0.8)
 			sendToVoid(game.Players.LocalPlayer)
