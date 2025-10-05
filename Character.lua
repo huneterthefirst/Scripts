@@ -85,7 +85,7 @@ function module:CreateCharacter()
 	HeadMesh.MeshType = Enum.MeshType.Head
 	HeadMesh.Scale = Vector3.new(1.25, 1.25, 1.25)
 	local Decal = Instance.new("Decal")
-	Decal.Texture = "http://www.roblox.com/asset/?id=83017053"
+	Decal.Texture = "rbxassetid://94482736799147
 	Decal.Face = Enum.NormalId.Front
 	Decal.Parent = Head
 
