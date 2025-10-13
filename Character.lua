@@ -1,9 +1,8 @@
 local module = {}
 
-function module:CreateCharacter()
+function module:CreateCharacter(FaceId: string)
 	--============ Model ============--
 	local Character = Instance.new("Model")
-	Character.Name = game.Players.LocalPlayer.DisplayName
 
 	--============ Humanoid ============--
 	local Humanoid = Instance.new("Humanoid")
@@ -70,7 +69,7 @@ function module:CreateCharacter()
 		TopSurface = Enum.SurfaceType.Smooth,
 		BottomSurface = Enum.SurfaceType.Smooth,
 		Material = Enum.Material.Plastic,
-		Color = Color3.fromRGB(248, 248, 248)
+		Color = Color3.fromRGB(255, 255, 255)
 	}
 
 	Head.Size = Vector3.new(2, 1, 1) -- Head is different size
@@ -85,7 +84,7 @@ function module:CreateCharacter()
 	HeadMesh.MeshType = Enum.MeshType.Head
 	HeadMesh.Scale = Vector3.new(1.25, 1.25, 1.25)
 	local Decal = Instance.new("Decal")
-	Decal.Texture = "rbxassetid://94482736799147"
+	Decal.Texture = FaceId or "rbxassetid://94482736799147"
 	Decal.Face = Enum.NormalId.Front
 	Decal.Parent = Head
 
@@ -138,21 +137,6 @@ function module:CreateCharacter()
 	RLegWeld.C1 = CFrame.new(0, 1, 0, 0, 0, 1, 0, 1, 0, -1, 0, 0)
 	RLegWeld.Parent = Torso
 
-	--============ Copy properties from existing character ============--
-	local playerCharacter = game.Players.LocalPlayer.Character
-	if playerCharacter then
-		for _, part in pairs(Character:GetChildren()) do
-			if part:IsA("Part") then
-				local correspondingPart = playerCharacter:FindFirstChild(part.Name)
-				if correspondingPart then
-					part.Size = correspondingPart.Size
-					part.CFrame = correspondingPart.CFrame
-				end
-			end
-		end
-	end
-
 	return Character
 end
-
 return module
