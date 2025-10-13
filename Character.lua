@@ -13,6 +13,7 @@ function module:CreateCharacter(FaceId: string)
 	Humanoid.WalkSpeed = 16
 	Humanoid.JumpPower = 50
 	Humanoid.RigType = Enum.HumanoidRigType.R6
+	Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 
 	--============ HumanoidRootPart (Essential for movement) ============--
 	local HumanoidRootPart = Instance.new("Part")
